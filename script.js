@@ -106,7 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    tryAutoLogin();
+    tryAutoLogin().then(() => {
+        if (!isKakaoLinked) {
+            setTimeout(() => {
+                showToast("💡 카카오 로그인을 하시면 톡캘린더(죠르디) 알림을 받을 수 있습니다!");
+            }, 1000);
+        }
+    });
 
     kakaoLoginBtn.addEventListener('click', () => {
         if (isKakaoLinked) return;
@@ -252,6 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- [V2] 클라우드 DB 연동 데이터 쓰기 ---
     addBtn.addEventListener('click', async () => {
+        if (!isKakaoLinked) {
+            alert("카카오 로그인이 필요합니다. 상단의 '카카오 연동하기' 버튼을 먼저 눌러주세요!");
+            return;
+        }
+        
         const text = taskInput.value.trim(); let timeVal = taskTimeInput.value; 
         if (text) {
             const strDate = getDateString(currentDate);
