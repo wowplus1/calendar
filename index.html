@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프리미엄 일정 관리</title>
+    <!-- 구글 폰트 적용 (Outfit) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PWA 매니페스트 (아이폰 홈 화면 추가용) -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/1.43.1/kakao.min.js"></script>
+</head>
+<body>
+    <div class="background-effect"></div>
+    <div class="background-effect shape-2"></div>
+    
+    <main class="container">
+        <header style="display:flex; flex-direction:column; align-items:center; gap:1rem;">
+            <h1>My Schedule</h1>
+            <p class="subtitle">모든 기기가 클라우드로 실시간 동기화됩니다. ☁️</p>
+            <div id="kakao-login-container" style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+                <button id="noti-permission-btn" class="kakao-btn" style="background-color: #3b82f6; color: white;">
+                    <i class="fa-solid fa-bell"></i> 알림 켜기
+                </button>
+                <button id="kakao-login-btn" class="kakao-btn">
+                     <i class="fa-solid fa-comment"></i> 카카오 연동하기
+                </button>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- 좌측 달력 패널 -->
+            <aside class="calendar-board">
+                <div class="calendar-header">
+                    <button class="icon-btn-small" id="prev-month-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div style="display:flex; align-items:center; gap: 0.8rem">
+                        <h3 id="calendar-month-year">2026. 04</h3>
+                        <button id="go-today-btn" class="today-btn">오늘로</button>
+                    </div>
+                    <button class="icon-btn-small" id="next-month-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-weekdays">
+                    <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+                </div>
+                <div class="calendar-days" id="calendar-days">
+                </div>
+            </aside>
+
+            <!-- 우측 일정 패널 -->
+            <section class="schedule-board">
+                <div class="date-header">
+                    <button class="icon-btn" id="prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <h2 id="current-date">2026. 04. 08</h2>
+                    <button class="icon-btn" id="next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="unified-input-group">
+                    <div class="time-picker-wrapper">
+                        <i class="fa-regular fa-clock"></i>
+                        <input type="time" id="task-time" step="300" title="알람 시간 설정 (5분 단위)">
+                    </div>
+                    <div class="divider"></div>
+                    <div class="input-row">
+                        <input type="text" id="task-input" placeholder="새로운 일정을 입력하세요 (Enter)">
+                        <button id="add-btn" title="추가"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <ul class="task-list" id="task-list">
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <!-- 알람 모달 UI -->
+    <div id="alarm-overlay" class="alarm-overlay hidden">
+        <div class="alarm-modal">
+            <div class="alarm-icon pulse"><i class="fa-solid fa-bell"></i></div>
+            <h2>알람 시간입니다!</h2>
+            <p id="alarm-text">일정 내용이 여기에 표시됩니다</p>
+            <p style="color:#FEE500; font-size:0.9rem; margin-top:-1rem; margin-bottom:1.5rem;"><i class="fa-solid fa-cloud"></i> 실시간 클라우드 푸시 알람</p>
+            <button id="close-alarm-btn">확인</button>
+        </div>
+    </div>
+
+    <!-- 간단한 알림 토스트를 위한 컨테이너 -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Firebase SDK 적용을 위한 type="module" 필수 명시 -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
