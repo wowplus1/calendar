@@ -394,5 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000); 
 
     // 초기 실행
+    updateMainSchedule();
+    renderCalendar();
     loadDataFromCloud();
 });
